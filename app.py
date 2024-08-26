@@ -1,11 +1,8 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_restful import Resource, Api
 from flask_mongoengine import MongoEngine
 
 app = Flask(__name__)
-api = Api(app)
-db = MongoEngine(app)
-
 
 app.config ['MONGODB_SETTINGS'] = {
     'db': 'users',
@@ -16,6 +13,9 @@ app.config ['MONGODB_SETTINGS'] = {
 }
 
 
+api = Api(app)
+db = MongoEngine(app)
+
 
 class UserModel(db.Document):
     cpf = db.StringField(required=True, unique=True)
@@ -25,9 +25,9 @@ class UserModel(db.Document):
     birth_date = db.DateTimeField(required=True)
 
 
-
 class Users(Resource):
     def get(self):
+        return UserModel.objects()
         return {'message': 'user 1'}
 
 
