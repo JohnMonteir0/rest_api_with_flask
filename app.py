@@ -11,7 +11,7 @@ app.config ['MONGODB_SETTINGS'] = {
     'db': 'users',
     'host': 'mongodb',
     'port': 27017,
-    'user': 'admin',
+    'username': 'admin',
     'password': 'admin'
 }
 
