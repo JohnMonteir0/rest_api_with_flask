@@ -80,7 +80,7 @@ class User(Resource):
         
         try:    
             response = UserModel(**data).save()
-            return {"message": "User %s sucessfully created!" % response.id}
+            return {"message": "User %s successfully created!" % response.id}
         except NotUniqueError:
             return {"message": "CPF alredy exists in database"}, 400
             
@@ -91,6 +91,6 @@ class User(Resource):
         if response:
             return jsonify(response)
         
-        return {"message": "User does not exist in databse!"}, 400
+        return {"message": "User does not exist in database!"}, 400
 
 
