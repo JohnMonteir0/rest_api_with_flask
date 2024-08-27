@@ -57,8 +57,7 @@ class UserModel(db.Document):
 
 class Users(Resource):
     def get(self):
-        return UserModel.objects()
-        return {'message': 'user 1'}
+        return jsonify(UserModel.objects())
 
 
 class User(Resource):
@@ -106,7 +105,12 @@ class User(Resource):
             
              
     def get(self, cpf):
-        return {'message': 'CPF'}
+        response = UserModel.objects(cpf=cpf)
+        
+        if response:
+            return jsonify(response)
+        
+        return {"message": "User does not exist in databse!"}, 400
 
 
 api.add_resource(Users, '/users')
