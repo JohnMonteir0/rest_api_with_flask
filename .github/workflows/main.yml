@@ -29,6 +29,6 @@ jobs:
     steps:
     - name: Deploy to production
       uses: johnbeynon/render-deploy-action@v0.0.8
-      env:
+      with:
         service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
         api-key: ${{ secrets.MY_RENDER_API_KEY }}
