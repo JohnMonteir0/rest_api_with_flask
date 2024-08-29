@@ -1,34 +1,18 @@
-name: Deploy Render
+name: My Deploy
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
-
-  workflow_dispatch:
+    branches: [ maion ]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
+      - name: Deploy to production
+        uses: johnbeynon/render-deploy-action@v0.0.8
         with:
-          python: '3.9'
-  
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          pip install mongomock
-        
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Deploy to production
-      uses: johnbeynon/render-deploy-action@v0.0.8
-      env:
-        service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
-        api-key: ${{ secrets.MY_RENDER_API_KEY }}
+          service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
+          api-key: ${{ secrets.MY_RENDER_API_KEY }}
+          wait-for-success: true
