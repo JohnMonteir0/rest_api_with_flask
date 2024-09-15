@@ -1,13 +1,13 @@
 version: '3.9'
 
 services:
-  mongodb:
-    image: mongo:6.0.17
-    container_name: mongodb
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin
+  # mongodb:
+  #   image: mongo:6.0.17
+  #   container_name: mongodb
+  #   restart: always
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: admin
+  #     MONGO_INITDB_ROOT_PASSWORD: admin
 
 
   api:
@@ -16,13 +16,13 @@ services:
     ports:
       - 5000:5000
     environment:
-      - FLASK_DEBUG=development
+      # - FLASK_DEBUG=development
       - MONGODB_DB=users
-      - MONGODB_HOST=mongodb
-      - MONGODB_USER=admin
-      - MONGODB_PASSWORD=admin
+      - MONGODB_HOST=10.34.3.143
+      - MONGODB_USER=restapi
+      - MONGODB_PASSWORD=xF08sDg9N0j5
     restart: always
-    depends_on:
-      - mongodb
+    # depends_on:
+    #   - mongodb
     volumes:
       - ./application:/app/application
