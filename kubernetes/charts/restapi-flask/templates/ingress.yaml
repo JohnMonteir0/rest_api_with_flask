@@ -3,9 +3,14 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ include "restapi-flask.fullname" . }}
+  annotations:
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/subnets: eks-pub-subnet-1a, eks-pub-subnet-1b
 spec:
+  ingressClassName: alb
   rules:
-  - host: api.localhost.com
+  - host: api.devops.com
     http:
       paths:
       - pathType: Prefix
