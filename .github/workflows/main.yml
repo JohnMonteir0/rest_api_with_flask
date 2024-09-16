@@ -27,7 +27,6 @@ jobs:
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read  # This is required for actions/checkout
-
     env:
       ecr_registry: 471112901594.dkr.ecr.us-east-1.amazonaws.com
       ecr_repository: eks-ecr
@@ -54,7 +53,7 @@ jobs:
           docker build -t ${ecr_registry}/${ecr_repository}:dev-${short_sha} .
           docker push ${ecr_registry}/${ecr_repository}:dev-${short_sha}
 
-          echo "image_tag=dev-${short_sha}" >> "$GITHUB_OUTPUT"
+          echo "image_tag=dev-${short_sha}" >> $GITHUB_OUTPUT
 
   deploy:
     needs: build
@@ -76,4 +75,6 @@ jobs:
         run: |
           aws eks update-kubeconfig --name eks-cluster --region us-east-1
 
-          echo "${TAG}"
+          TAG=${{ needs.build.outputs.image_tag }}
+
+          echo "Using Docker image tag: ${TAG}"
