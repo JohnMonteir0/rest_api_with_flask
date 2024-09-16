@@ -22,6 +22,7 @@ jobs:
           pip install mongomock
         
   build:
+    needs: test
     runs-on: ubuntu-latest
     permissions:
       id-token: write # This is required for requesting the JWT
@@ -30,6 +31,8 @@ jobs:
     env:
       ecr_registry: 471112901594.dkr.ecr.us-east-1.amazonaws.com
       ecr_repository: eks-ecr
+    outputs:
+      image_tag: ${{ steps.build.outputs.image_tag }}
 
     steps:
       - uses: actions/checkout@v3
@@ -38,7 +41,8 @@ jobs:
         with:
           aws-region: us-east-1
           role-to-assume: arn:aws:iam::471112901594:role/gh-actions-role
-      - name: Build Docker Image
+      - id: build
+        name: Build Docker Image
         run: |
           aws sts get-caller-identity
 
@@ -49,6 +53,8 @@ jobs:
 
           docker build -t ${ecr_registry}/${ecr_repository}:dev-${short_sha} .
           docker push ${ecr_registry}/${ecr_repository}:dev-${short_sha}
+
+          echo "image_tag=dev-${short_sha" >> $GITHUB_OUTPUT
 
   deploy:
     needs: build
@@ -64,8 +70,10 @@ jobs:
         with:
           aws-region: us-east-1
           role-to-assume: arn:aws:iam::471112901594:role/gh-actions-role
+        env:
+          TAG: ${{ needs.build.outputs.image_tag }} 
       - name: Deploy to Kubernetes
         run: |
           aws eks update-kubeconfig --name eks-cluster --region us-east-1
 
-          kubectl get nodes
+          echo ${TAG}
