@@ -48,4 +48,4 @@ jobs:
           short_sha=${sha:0:7}
 
           docker build -t ${ecr_registry}/${ecr_repository}:dev-${short_sha} .
-          docker push ${ecr_registry}/${ecr_repository}:${short_sha}
+          docker push ${ecr_registry}/${ecr_repository}:dev-${short_sha}
