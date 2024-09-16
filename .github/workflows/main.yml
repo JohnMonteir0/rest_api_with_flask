@@ -49,3 +49,23 @@ jobs:
 
           docker build -t ${ecr_registry}/${ecr_repository}:dev-${short_sha} .
           docker push ${ecr_registry}/${ecr_repository}:dev-${short_sha}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::471112901594:role/gh-actions-role
+      - name: Deploy to Kubernetes
+        run: |
+          aws eks update-kubeconfig --name eks-cluster --region us-east-1
+
+          kubectl get nodes
