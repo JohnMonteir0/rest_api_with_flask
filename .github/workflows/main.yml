@@ -64,7 +64,7 @@ jobs:
         with:
           aws-region: us-east-1
           role-to-assume: arn:aws:iam::471112901594:role/gh-actions-role
-      - name: Build Docker Image
+      - name: Deploy to Kubernetes
         run: |
           aws eks update-kubeconfig --name eks-cluster --region us-east-1
 
