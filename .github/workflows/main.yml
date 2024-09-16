@@ -54,7 +54,7 @@ jobs:
           docker build -t ${ecr_registry}/${ecr_repository}:dev-${short_sha} .
           docker push ${ecr_registry}/${ecr_repository}:dev-${short_sha}
 
-          echo "image_tag=dev-${short_sha" >> $GITHUB_OUTPUT
+          echo "image_tag=dev-${short_sha"} >> $GITHUB_OUTPUT
 
   deploy:
     needs: build
