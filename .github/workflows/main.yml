@@ -21,8 +21,11 @@ jobs:
           pip install -r requirements.txt
           pip install mongomock
         
-  deploy:
+  build:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
 
     steps:
       - uses: actions/checkout@v3
@@ -30,7 +33,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: us-east-1
-          role-to-assume: arn:aws:iam::381491904201:role/gh-actions-role
-      - name: Docker Build Image
+          role-to-assume: arn:aws:iam::471112901594:role/gh-actions-role
+      - name: Build Docker Image
         run: |
           aws sts get-caller-identity
