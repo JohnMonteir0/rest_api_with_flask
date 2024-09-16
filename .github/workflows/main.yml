@@ -79,6 +79,6 @@ jobs:
 
           echo "Using Docker image tag: ${TAG}"
 
-          helm upgrade -- install\
+          helm upgrade --install\
             -- set image.tag=${TAG} \
             restapi kubernetes/charts/restapi-flask
