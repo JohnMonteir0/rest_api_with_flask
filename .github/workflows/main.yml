@@ -76,4 +76,4 @@ jobs:
         run: |
           aws eks update-kubeconfig --name eks-cluster --region us-east-1
 
-          echo "${TAG}""
+          echo "${TAG}"
