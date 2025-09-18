@@ -3,7 +3,7 @@ replicaCount: 1
 appPort: 5000
 
 image:
-  registry: 127854692984.dkr.ecr.us-east-1.amazonaws.com/eks-ecr
+  registry: 797606048546.dkr.ecr.us-east-1.amazonaws.com/eks-ecr
   tag: latest
 
 # environmentVariables:
