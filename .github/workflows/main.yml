@@ -74,8 +74,10 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-          echo "Using Docker image tag: ${TAG}"
           aws eks update-kubeconfig -- name eks-cluster --region us-east-1
-          helm upgrade --install \
-            --set image.tag=${TAG}
-            restapi kubernetes/charts/restapi-flask --set image.tag=${TAG}
+
+          TAG=${{ needs.build.outputs.image_tag }}
+
+          echo "Using Docker image tag: ${TAG}"
+
+          helm upgrade --install restapi kubernetes/charts/restapi-flask --set image.tag=${TAG}
