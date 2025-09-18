@@ -31,10 +31,11 @@ class ProdConfig:
 
 
 class MockConfig:
-    import mongomock
-
-    MONGODB_SETTINGS = {
-        "db": "users",
-        "host": "mongodb://localhost",
-        "mongo_client_class": mongomock.MongoClient,
-    }
+    @staticmethod
+    def get_settings():
+        import mongomock
+        return {
+            "db": "users",
+            "host": "mongodb://localhost",
+            "mongo_client_class": mongomock.MongoClient,
+        }
