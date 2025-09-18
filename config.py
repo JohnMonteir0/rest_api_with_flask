@@ -17,7 +17,7 @@ class ProdConfig:
     MONGODB_PASSWORD = os.getenv("MONGODB_PASSWORD")
     MONGODB_HOST = os.getenv("MONGODB_HOST")
     MONGODB_DB = os.getenv("MONGODB_DB")
-    MONGODB_CA_FILE = os.getenv("MONGODB_CA_FILE", "/application/certs/rds-combined-ca-bundle.pem")
+    MONGODB_CA_FILE = os.getenv("MONGODB_CA_FILE", "app/application/certs/rds-combined-ca-bundle.pem")
 
     URI = (
         f"mongodb://{MONGODB_USER}:{MONGODB_PASSWORD}@{MONGODB_HOST}:27017/{MONGODB_DB}"
