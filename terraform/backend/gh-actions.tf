@@ -57,3 +57,30 @@ resource "aws_iam_role_policy_attachment" "github_actions_admin" {
   role       = aws_iam_role.gh_actions_role.name
   policy_arn = aws_iam_policy.github_actions_admin.arn
 }
+
+resource "aws_iam_role_policy_attachment" "github_actions_ecr" {
+  role       = aws_iam_role.gh_actions_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"
+}
+
+resource "aws_iam_policy" "github_actions_eks_ro" {
+  name        = "eks-read-only"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "eks:DescribeCluster",
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "github_actions_eks" {
+  role       = aws_iam_role.gh_actions_role.name
+  policy_arn = aws_iam_policy.github_actions_eks_ro.arn
+}
