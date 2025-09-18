@@ -1,5 +1,5 @@
 import os
-import mongomock
+# import mongomock
 
 
 class DevConfig:
