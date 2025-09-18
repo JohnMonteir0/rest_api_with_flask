@@ -75,8 +75,17 @@ jobs:
       - name: Debug AWS identity
         run: aws sts get-caller-identity
 
+      - name: Update kubeconfig
+        run: aws eks update-kubeconfig --name eks-cluster --region us-east-1
+
+      - name: Generate EKS token and patch kubeconfig
+        run: |
+          TOKEN=$(aws eks get-token --cluster-name eks-cluster --region us-east-1 | jq -r '.status.token')
+          kubectl config set-credentials gha --token="$TOKEN"
+          kubectl config set-context --current --user=gha
+          kubectl get nodes
+
       - name: Deploy to Kubernetes
         run: |
-          aws eks update-kubeconfig --name eks-cluster --region us-east-1
           echo "Using Docker image tag: ${TAG}"
           helm upgrade --install restapi kubernetes/charts/restapi-flask --set image.tag=${TAG}
