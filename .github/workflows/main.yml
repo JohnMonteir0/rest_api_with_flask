@@ -39,7 +39,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: us-east-1
-          role-to-assume: arn:aws:iam::471112901594:role/gh-actions-role
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
       - id: build
         name: Build Docker Image
         run: |
@@ -68,7 +68,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: us-east-1
-          role-to-assume: arn:aws:iam::471112901594:role/gh-actions-role
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
         env:
           TAG: ${{ needs.build.outputs.image_tag }} 
       - name: Deploy to Kubernetes
