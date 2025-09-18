@@ -1,5 +1,4 @@
 import os
-# import mongomock
 
 
 class DevConfig:
@@ -32,6 +31,7 @@ class ProdConfig:
 
 
 class MockConfig:
+    import mongomock
 
     MONGODB_SETTINGS = {
         "db": "users",
