@@ -173,10 +173,10 @@ resource "helm_release" "cert_manager" {
   #   value = "true"
   # }
 
-  set {
-    name  = "webhook.timeoutSeconds"
-    value = "30"
-  }
+  # set {
+  #   name  = "webhook.timeoutSeconds"
+  #   value = "300"
+  # }
 
   set {
     name  = "replicaCount"

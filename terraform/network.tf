@@ -9,10 +9,10 @@ module "vpc" {
   name = local.name
   cidr = local.vpc_cidr
 
-  azs             = local.azs
-  private_subnets = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 4, k)]
-  public_subnets  = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 48)]
-  intra_subnets   = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 52)]
+  azs              = local.azs
+  private_subnets  = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 4, k)]
+  public_subnets   = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 48)]
+  database_subnets = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 52)]
 
   enable_nat_gateway = true
   single_nat_gateway = true
@@ -57,7 +57,7 @@ resource "aws_subnet" "pods" {
   tags = {
     Name                                        = "eks-cluster-pod-${each.key}"
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "eks-cluster-pod-subnet"                         = "true"
+    "eks-cluster-pod-subnet"                    = "true"
   }
 }
 

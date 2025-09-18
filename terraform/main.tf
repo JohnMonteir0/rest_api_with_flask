@@ -58,17 +58,6 @@ module "eks_bottlerocket" {
       to_port     = 0
       cidr_blocks = [module.vpc.vpc_cidr_block]
     }
-
-    # optional: be explicit for ICMP if you prefer tighter rules
-    allow_icmp_from_vpc = {
-      description = "Allow ICMP from VPC CIDR"
-      type        = "ingress"
-      protocol    = "icmp"
-      from_port   = -1
-      to_port     = -1
-      cidr_blocks = [module.vpc.vpc_cidr_block]
-    }
-
     allow_all_from_vpc = {
       description = "Allow all traffic from pod CIDR"
       type        = "ingress"
