@@ -6,7 +6,7 @@ module "aws_auth" {
 
   aws_auth_roles = [
     {
-      rolearn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/gh_actions_role"
+      rolearn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/gh-actions-role"
       username = "github_actions"
       groups   = ["system:masters"]
     },

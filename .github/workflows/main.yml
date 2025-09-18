@@ -71,28 +71,11 @@ jobs:
         with:
           aws-region: us-east-1
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-      - name: Debug AWS identity
-        run: aws sts get-caller-identity
-      - name: Update kubeconfig with token
-        run: |
-          ENDPOINT=$(aws eks describe-cluster --name eks-cluster --region us-east-1 --query "cluster.endpoint" --output text)
-          CA=$(aws eks describe-cluster --name eks-cluster --region us-east-1 --query "cluster.certificateAuthority.data" --output text | base64 -d)
-          echo "$CA" > ca.crt
-
-          TOKEN=$(aws eks get-token --cluster-name eks-cluster --region us-east-1 | jq -r '.status.token')
-
-          kubectl config set-cluster eks-cluster \
-            --server=$ENDPOINT \
-            --certificate-authority=./ca.crt \
-            --embed-certs=true
-
-          kubectl config set-credentials gha --token="$TOKEN"
-          kubectl config set-context eks --cluster=eks-cluster --user=gha
-          kubectl config use-context eks
-
-          kubectl get nodes
 
       - name: Deploy to Kubernetes
         run: |
           echo "Using Docker image tag: ${TAG}"
-          helm upgrade --install restapi kubernetes/charts/restapi-flask --set image.tag=${TAG}
+          aws eks update-kubeconfig -- name eks-cluster --region us-east-1
+          helm upgrade --install \
+            --set image.tag=${TAG}
+            restapi kubernetes/charts/restapi-flask --set image.tag=${TAG}
