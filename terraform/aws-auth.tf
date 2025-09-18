@@ -4,13 +4,13 @@ module "aws_auth" {
   create_aws_auth_configmap = true
   manage_aws_auth_configmap = true
 
-  #   aws_auth_roles = [
-  #     {
-  #       rolearn  = local.node_role_arn
-  #       username = "system:node:{{EC2PrivateDNSName}}"
-  #       groups   = ["system:bootstrappers", "system:nodes"]
-  #     },
-  #   ]
+  aws_auth_roles = [
+    {
+      rolearn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/gh_actions_role"
+      username = "github_actions"
+      groups   = ["system:masters"]
+    },
+  ]
 
   aws_auth_users = [
     {
