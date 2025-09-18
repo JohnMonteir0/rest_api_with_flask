@@ -28,7 +28,7 @@ jobs:
       id-token: write # This is required for requesting the JWT
       contents: read  # This is required for actions/checkout
     env:
-      ecr_registry: 445830509717.dkr.ecr.us-east-1.amazonaws.com
+      ecr_registry: 797606048546.dkr.ecr.us-east-1.amazonaws.com
       ecr_repository: eks-ecr
     outputs:
       image_tag: ${{ steps.build.outputs.image_tag }}

@@ -9,11 +9,13 @@ resource "aws_docdb_cluster" "docdb" {
 
   db_subnet_group_name   = module.vpc.database_subnet_group_name
   vpc_security_group_ids = [aws_security_group.allow_eks_cluster.id]
+
+  depends_on = [ aws_security_group.allow_eks_cluster ]
 }
 
 resource "aws_docdb_cluster_instance" "cluster_instances" {
   count                = 2
-  identifier           = "docdb-${count.index}"
+  identifier           = "flask-app-docdb-${count.index}"
   cluster_identifier   = aws_docdb_cluster.docdb.id
   instance_class       = "db.t4g.medium"
 }

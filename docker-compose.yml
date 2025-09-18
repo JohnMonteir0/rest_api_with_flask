@@ -18,7 +18,7 @@ services:
     environment:
       # - FLASK_DEBUG=development
       - MONGODB_DB=users
-      - MONGODB_HOST=flask-app.cluster-cotyq8wcmhll.us-east-1.docdb.amazonaws.com
+      - MONGODB_HOST=flask-app.cluster-cyfc8cqk0azq.us-east-1.docdb.amazonaws.com
       - MONGODB_USER=restapi
       - MONGODB_PASSWORD=xF08sDg9N0j5
     restart: always
