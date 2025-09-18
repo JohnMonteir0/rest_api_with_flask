@@ -58,6 +58,8 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    env:
+      TAG: ${{ needs.build.outputs.image_tag }}
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read  # This is required for actions/checkout
@@ -69,14 +71,12 @@ jobs:
         with:
           aws-region: us-east-1
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-        env:
-          TAG: ${{ needs.build.outputs.image_tag }} 
+
+      - name: Debug AWS identity
+        run: aws sts get-caller-identity
+
       - name: Deploy to Kubernetes
         run: |
           aws eks update-kubeconfig --name eks-cluster --region us-east-1
-
-          TAG=${{ needs.build.outputs.image_tag }}
-
           echo "Using Docker image tag: ${TAG}"
-
           helm upgrade --install restapi kubernetes/charts/restapi-flask --set image.tag=${TAG}
