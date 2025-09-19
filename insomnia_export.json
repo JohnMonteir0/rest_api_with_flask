@@ -1,0 +1,92 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2025-09-19T00:00:00.000Z",
+  "__export_source": "chatgpt",
+  "resources": [
+    {
+      "_id": "wrk_flask_api_test",
+      "_type": "workspace",
+      "name": "Flask User API",
+      "scope": "collection"
+    },
+    {
+      "_id": "env_base",
+      "_type": "environment",
+      "parentId": "wrk_flask_api_test",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://flask-app.797606048546.realhandsonlabs.net"
+      }
+    },
+    {
+      "_id": "req_get_users",
+      "_type": "request",
+      "parentId": "wrk_flask_api_test",
+      "name": "GET All Users",
+      "method": "GET",
+      "url": "{{ base_url }}/users"
+    },
+    {
+      "_id": "req_post_user_valid",
+      "_type": "request",
+      "parentId": "wrk_flask_api_test",
+      "name": "POST Valid User",
+      "method": "POST",
+      "url": "{{ base_url }}/user",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"cpf\": \"434.901.730-58\",\n  \"email\": \"contato@johndoe.me\",\n  \"birth_date\": \"1980-09-10\"\n}"
+      }
+    },
+    {
+      "_id": "req_post_user_invalid",
+      "_type": "request",
+      "parentId": "wrk_flask_api_test",
+      "name": "POST Invalid User",
+      "method": "POST",
+      "url": "{{ base_url }}/user",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"cpf\": \"434.901.730-59\",\n  \"email\": \"contato@johndoe.me\",\n  \"birth_date\": \"1980-09-10\"\n}"
+      }
+    },
+    {
+      "_id": "req_get_user_valid",
+      "_type": "request",
+      "parentId": "wrk_flask_api_test",
+      "name": "GET Valid User by CPF",
+      "method": "GET",
+      "url": "{{ base_url }}/user/434.901.730-58"
+    },
+    {
+      "_id": "req_get_user_invalid",
+      "_type": "request",
+      "parentId": "wrk_flask_api_test",
+      "name": "GET Invalid User by CPF",
+      "method": "GET",
+      "url": "{{ base_url }}/user/434.901.730-59"
+    },
+    {
+      "_id": "req_patch_user",
+      "_type": "request",
+      "parentId": "wrk_flask_api_test",
+      "name": "PATCH Update User",
+      "method": "PATCH",
+      "url": "{{ base_url }}/user",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"first_name\": \"Mary\",\n  \"last_name\": \"Doe\",\n  \"cpf\": \"434.901.730-58\",\n  \"email\": \"contato@johndoe.me\",\n  \"birth_date\": \"1980-09-10\"\n}"
+      }
+    },
+    {
+      "_id": "req_delete_user",
+      "_type": "request",
+      "parentId": "wrk_flask_api_test",
+      "name": "DELETE User",
+      "method": "DELETE",
+      "url": "{{ base_url }}/user/434.901.730-58"
+    }
+  ]
+}
+
