@@ -1,13 +1,16 @@
 from application import create_app
 import os
-import socket
 
 if os.getenv("FLASK_DEBUG") == "development":
     app = create_app("config.DevConfig")
 else:
     app = create_app("config.ProdConfig")
-    
-ip_address = socket.gethostbyname(socket.gethostname())
 
 if __name__ == "__main__":
-    app.run(debug=True, host=ip_address, port=os.getenv("PORT", 5000))
+    # Only enable debug if FLASK_DEBUG=development
+    debug_mode = os.getenv("FLASK_DEBUG") == "development"
+    app.run(
+        debug=debug_mode,
+        host="0.0.0.0",
+        port=int(os.getenv("PORT", 5000)),
+    )
