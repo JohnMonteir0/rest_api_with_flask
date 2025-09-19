@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: "/"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-    external-dns.alpha.kubernetes.io/hostname:"{{ .Values.host }}"
+    external-dns.alpha.kubernetes.io/hostname:"flask-app.797606048546.realhandsonlabs.net"
 spec:
   ingressClassName: nginx
   rules:
