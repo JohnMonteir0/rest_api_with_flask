@@ -16,6 +16,10 @@ spec:
       containers:
       - image: {{ .Values.image.registry | default "restapi-flask" }}:{{ .Values.image.tag | default "latest" }}
         name: api
+        ports:
+          - name: http
+            containerPort: {{ .Values.appPort | default 5000 }}
+            protocol: TCP
         {{- if .Values.environmentVariables }}
         env:
         {{- toYaml .Values.environmentVariables | nindent 8 }}
